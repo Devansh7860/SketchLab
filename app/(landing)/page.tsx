@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import "./landing.css";
 
@@ -229,23 +230,13 @@ export default function LandingPage() {
       <div className="fixed inset-0 pointer-events-none z-50 grain-overlay animate-pulse-grain mix-blend-overlay" />
 
       {/* ——— Header ——— */}
-      <header className="fixed top-0 w-full z-40 py-6 px-8 mix-blend-difference">
+      <header className="fixed top-0 w-full z-40 py-4 px-4 sm:px-8 mix-blend-difference">
         <div className="flex justify-between items-center">
-          <div className="text-2xl font-bold tracking-tighter">SL.</div>
-          <nav className="flex items-center gap-6 md:gap-8">
-            <a
-              href="#manifesto"
-              className="hidden md:inline text-sm font-bold uppercase tracking-widest hover:text-[#00f5d4] transition-colors"
-            >
-              Manifesto
-            </a>
-            <a
-              href="#canvas"
-              className="hidden md:inline text-sm font-bold uppercase tracking-widest hover:text-[#ffbe0b] transition-colors"
-            >
-              Canvas
-            </a>
-
+          <Link href="/" className="flex items-center gap-2.5">
+            <Image src="/logo.svg" alt="SketchLab" width={36} height={36} style={{ filter: "brightness(0) invert(1)" }} />
+            <span className="text-2xl font-bold tracking-tighter">SketchLab</span>
+          </Link>
+          <nav className="flex items-center gap-3 sm:gap-6">
             {/* Auth buttons */}
             <SignedIn>
               <Link
@@ -277,11 +268,11 @@ export default function LandingPage() {
         {/* ——— Hero ——— */}
         <section className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden pt-20">
           {/* Animated cursor lines */}
-          <div className="absolute inset-0 z-0 opacity-40">
+          <div className="absolute inset-0 z-0 opacity-40 hidden md:block">
             <HeroCursorSvg />
           </div>
 
-          <div className="relative z-10 text-center px-4 max-w-5xl mx-auto flex flex-col items-center">
+          <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto flex flex-col items-center w-full">
             <h1
               className="leading-[0.85] tracking-tighter text-white mix-blend-exclusion"
               style={{
@@ -300,8 +291,8 @@ export default function LandingPage() {
               </span>
             </h1>
 
-            <p className="mt-12 text-2xl md:text-3xl font-serif-italic text-gray-400 max-w-xl mx-auto">
-              The anti-SaaS whiteboard for raw ideas.
+            <p className="mt-8 sm:mt-12 text-xl sm:text-2xl md:text-3xl font-serif-italic text-gray-400 max-w-xl mx-auto px-2">
+              Where rough ideas become real — no templates, no fluff, just a canvas and your team.
             </p>
 
             <div className="mt-16">
@@ -334,10 +325,10 @@ export default function LandingPage() {
         </section>
 
         {/* ——— Sticky Notes / Manifesto ——— */}
-        <section id="manifesto" className="py-32 px-6 overflow-hidden">
+        <section id="manifesto" className="py-16 sm:py-32 px-4 sm:px-6 overflow-hidden">
           <div className="max-w-7xl mx-auto">
             <h2
-              className="text-5xl md:text-7xl text-center mb-24 tracking-tight"
+              className="text-3xl sm:text-5xl md:text-7xl text-center mb-12 sm:mb-24 tracking-tight"
               style={{ fontWeight: 800 }}
             >
               Your team&apos;s brain,
@@ -428,7 +419,7 @@ export default function LandingPage() {
             }}
           />
 
-          <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center gap-8 sm:gap-12">
             {/* Canvas mockup */}
             <div
               className="w-full md:w-1/2 aspect-video rounded-lg border border-white/10 relative overflow-hidden shadow-2xl"
@@ -480,13 +471,13 @@ export default function LandingPage() {
         </section>
 
         {/* ——— CTA / Footer ——— */}
-        <section className="py-40 px-6 text-center relative overflow-hidden">
+        <section className="py-20 sm:py-40 px-4 sm:px-6 text-center relative overflow-hidden">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-[100px] pointer-events-none" style={{ backgroundColor: "rgba(0,245,212,0.05)" }} />
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full blur-[100px] pointer-events-none" style={{ backgroundColor: "rgba(255,107,107,0.05)" }} />
 
           <div className="relative z-10 max-w-5xl mx-auto glow-hover cursor-default">
             <h2
-              className="text-6xl md:text-8xl tracking-tighter mb-12 leading-[0.9]"
+              className="text-4xl sm:text-6xl md:text-8xl tracking-tighter mb-8 sm:mb-12 leading-[0.9]"
               style={{ fontWeight: 800 }}
             >
               <span className="main-text transition-colors duration-300">
@@ -506,8 +497,8 @@ export default function LandingPage() {
               Start Sketching
             </Link>
 
-            <div className="mt-16 flex justify-center gap-8 text-sm font-bold uppercase tracking-widest text-gray-600">
-              <span>© SketchLabs {new Date().getFullYear()}</span>
+            <div className="mt-12 sm:mt-16 flex flex-wrap justify-center gap-4 sm:gap-8 text-xs sm:text-sm font-bold uppercase tracking-widest text-gray-600">
+              <span>© SketchLab {new Date().getFullYear()}</span>
               <a href="#" className="hover:text-white transition-colors">
                 Twitter
               </a>
