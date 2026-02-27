@@ -451,7 +451,16 @@ export const Canvas = ({ boardId }: CanvasProps) => {
   }, [deleteLayers, history]);
 
   return (
-    <main className="h-full w-full relative bg-neutral-100 touch-none">
+    <main className="h-full w-full relative bg-neutral-50 touch-none">
+      {/* Dot grid background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(circle, #d4d4d4 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+          backgroundPosition: `${camera.x % 24}px ${camera.y % 24}px`,
+        }}
+      />
       <Info boardId={boardId} />
       <Participants />
       <Toolbar

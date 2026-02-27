@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 
 import { CanvasMode, LayerType, type CanvasState } from "@/types/canvas";
+import { Separator } from "@/components/ui/separator";
 
 import { ToolButton } from "./tool-button";
 
@@ -31,8 +32,8 @@ export const Toolbar = ({
   canUndo,
 }: ToolbarProps) => {
   return (
-    <div className="absolute top-[50%] -translate-y-[50%] left-2 flex flex-col gap-y-4">
-      <div className="bg-white rounded-md p-1.5 flex gap-y-1 flex-col items-center shadow-md">
+    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-x-2 z-10">
+      <div className="bg-white rounded-xl p-1 flex items-center gap-x-0.5 shadow-lg border border-neutral-200/60">
         <ToolButton
           label="Select"
           icon={MousePointer2}
@@ -46,35 +47,7 @@ export const Toolbar = ({
           }
         />
 
-        <ToolButton
-          label="Text"
-          icon={Type}
-          onClick={() =>
-            setCanvasState({
-              mode: CanvasMode.Inserting,
-              layerType: LayerType.Text,
-            })
-          }
-          isActive={
-            canvasState.mode === CanvasMode.Inserting &&
-            canvasState.layerType === LayerType.Text
-          }
-        />
-
-        <ToolButton
-          label="Sticky note"
-          icon={StickyNote}
-          onClick={() =>
-            setCanvasState({
-              mode: CanvasMode.Inserting,
-              layerType: LayerType.Note,
-            })
-          }
-          isActive={
-            canvasState.mode === CanvasMode.Inserting &&
-            canvasState.layerType === LayerType.Note
-          }
-        />
+        <Separator orientation="vertical" className="h-6 mx-0.5" />
 
         <ToolButton
           label="Rectangle"
@@ -116,9 +89,41 @@ export const Toolbar = ({
           }
           isActive={canvasState.mode === CanvasMode.Pencil}
         />
+
+        <Separator orientation="vertical" className="h-6 mx-0.5" />
+
+        <ToolButton
+          label="Text"
+          icon={Type}
+          onClick={() =>
+            setCanvasState({
+              mode: CanvasMode.Inserting,
+              layerType: LayerType.Text,
+            })
+          }
+          isActive={
+            canvasState.mode === CanvasMode.Inserting &&
+            canvasState.layerType === LayerType.Text
+          }
+        />
+
+        <ToolButton
+          label="Sticky note"
+          icon={StickyNote}
+          onClick={() =>
+            setCanvasState({
+              mode: CanvasMode.Inserting,
+              layerType: LayerType.Note,
+            })
+          }
+          isActive={
+            canvasState.mode === CanvasMode.Inserting &&
+            canvasState.layerType === LayerType.Note
+          }
+        />
       </div>
 
-      <div className="bg-white rounded-md p-1.5 flex flex-col items-center shadow-md">
+      <div className="bg-white rounded-xl p-1 flex items-center gap-x-0.5 shadow-lg border border-neutral-200/60">
         <ToolButton
           label="Undo"
           icon={Undo2}
@@ -139,8 +144,11 @@ export const Toolbar = ({
 export const ToolbarSkeleton = () => {
   return (
     <div
-      className="absolute top-[50%] -translate-y-[50%] left-2 flex flex-col gap-y-4 bg-white h-[360px] w-[52px] shadow-md rounded-md"
+      className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-x-2"
       aria-hidden
-    />
+    >
+      <div className="bg-white rounded-xl h-11 w-[340px] shadow-lg border border-neutral-200/60" />
+      <div className="bg-white rounded-xl h-11 w-20 shadow-lg border border-neutral-200/60" />
+    </div>
   );
 };

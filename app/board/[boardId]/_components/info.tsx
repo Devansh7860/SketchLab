@@ -9,12 +9,11 @@ import Link from "next/link";
 import { Actions } from "@/components/actions";
 import { Hint } from "@/components/hint";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 import { useRenameModal } from "@/store/use-rename-modal";
-
-const TabSeparator = () => <div className="text-neutral-300 px-1.5">|</div>;
 
 const font = Poppins({
   subsets: ["latin"],
@@ -34,48 +33,47 @@ export const Info = ({ boardId }: InfoProps) => {
   if (!data) return <InfoSkeleton />;
 
   return (
-    <div className="absolute top-2 left-2 bg-white rounded-md px-1.5 h-12 flex items-center shadow-md">
+    <div className="absolute top-3 left-3 bg-white rounded-xl px-2 h-11 flex items-center shadow-lg border border-neutral-200/60 z-10">
       <Hint label="Go to boards" side="bottom" sideOffset={10}>
-        <Button variant="board" className="px-2" asChild>
-          <Link href="/">
+        <Button variant="ghost" className="px-1.5 h-8" asChild>
+          <Link href="/dashboard">
             <Image
               src="/logo.svg"
-              alt="Miro Clone Logo"
-              height={40}
-              width={40}
+              alt="SketchLab Logo"
+              height={28}
+              width={28}
             />
             <span
               className={cn(
-                "font-semibold text-xl ml-2 text-black",
+                "font-semibold text-base ml-1 text-foreground hidden sm:inline",
                 font.className,
               )}
             >
-              
               SketchLab
             </span>
           </Link>
         </Button>
       </Hint>
 
-      <TabSeparator />
+      <Separator orientation="vertical" className="h-6 mx-1.5" />
 
       <Hint label="Edit title" side="bottom" sideOffset={10}>
         <Button
           onClick={() => onOpen(data._id, data.title)}
-          variant="board"
-          className="text-base font-normal px-2"
+          variant="ghost"
+          className="text-sm font-normal px-2 h-8 max-w-40 truncate"
         >
           {data.title}
         </Button>
       </Hint>
 
-      <TabSeparator />
+      <Separator orientation="vertical" className="h-6 mx-1.5" />
 
       <Actions id={data._id} title={data.title} side="bottom" sideOffset={10}>
-        <div className="">
+        <div>
           <Hint label="Main menu" side="bottom" sideOffset={10}>
-            <Button size="icon" variant="board">
-              <Menu />
+            <Button size="icon-sm" variant="ghost">
+              <Menu className="size-4" />
             </Button>
           </Hint>
         </div>
@@ -87,7 +85,7 @@ export const Info = ({ boardId }: InfoProps) => {
 export const InfoSkeleton = () => {
   return (
     <div
-      className="w-[300px] absolute top-2 left-2 bg-white rounded-md px-1.5 h-12 flex items-center shadow-md"
+      className="w-60 absolute top-3 left-3 bg-white rounded-xl h-11 flex items-center shadow-lg border border-neutral-200/60"
       aria-hidden
     />
   );

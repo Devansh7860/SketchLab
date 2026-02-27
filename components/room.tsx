@@ -37,7 +37,7 @@ class RoomErrorBoundary extends Component<
             <p className="text-sm text-muted-foreground max-w-md">
               You may not have access to this board, or the board may have been deleted.
             </p>
-            <a href="/" className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+            <a href="/dashboard" className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
               Return to boards
             </a>
           </div>

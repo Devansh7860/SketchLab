@@ -15,7 +15,7 @@ export const RoomError = () => {
         </p>
       </div>
       <Button asChild variant="default">
-        <Link href="/">
+        <Link href="/dashboard">
           Return to boards
         </Link>
       </Button>

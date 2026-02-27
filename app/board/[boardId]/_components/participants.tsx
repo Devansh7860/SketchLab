@@ -3,7 +3,6 @@
 import { connectionIdToColor } from "@/lib/utils";
 import { useOthers, useSelf } from "@liveblocks/react/suspense";
 
-
 import { UserAvatar } from "./user-avatar";
 import { memo } from "react";
 
@@ -15,7 +14,7 @@ export const Participants = memo(function Participants() {
   const hasMoreUsers = users.length > MAX_SHOWN_OTHER_USERS;
 
   return (
-    <div className="absolute h-12 top-2 right-2 bg-white rounded-md p-3 flex items-center shadow-md">
+    <div className="absolute h-11 top-3 right-3 bg-white rounded-xl px-3 flex items-center shadow-lg border border-neutral-200/60 z-10">
       <div className="flex gap-x-2">
         {users.slice(0, MAX_SHOWN_OTHER_USERS).map(({ connectionId, info }) => {
           return (
@@ -52,7 +51,7 @@ export const Participants = memo(function Participants() {
 export const ParticipantsSkeleton = () => {
   return (
     <div
-      className="w-[100px] absolute h-12 top-2 right-2 bg-white rounded-md p-3 flex items-center shadow-md"
+      className="w-[100px] absolute h-11 top-3 right-3 bg-white rounded-xl px-3 flex items-center shadow-lg border border-neutral-200/60"
       aria-hidden
     />
   );

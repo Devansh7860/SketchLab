@@ -20,7 +20,7 @@ export const OrgSidebar = () => {
 
   return (
     <div className="hidden lg:flex flex-col space-y-6 w-[206px] pl-5 pt-5 border-r border-neutral-100 bg-neutral-50/50">
-      <Link href="/">
+      <Link href="/dashboard">
         <div className="flex items-center gap-x-2">
           <Image src="/logo.svg" alt="SketchLab Logo" height={36} width={36} />
           <span className={cn("font-semibold text-xl", font.className)}>
@@ -52,13 +52,13 @@ export const OrgSidebar = () => {
             },
           },
         }}
-        afterLeaveOrganizationUrl="/"
-        afterSelectOrganizationUrl="/"
+        afterLeaveOrganizationUrl="/dashboard"
+        afterSelectOrganizationUrl="/dashboard"
       />
 
       <div className="space-y-0.5 w-full">
         <Link
-          href="/"
+          href="/dashboard"
           className={cn(
             "flex items-center gap-x-2 px-2 py-2 rounded-lg text-sm transition-colors",
             !favourites
@@ -70,7 +70,7 @@ export const OrgSidebar = () => {
           Team boards
         </Link>
         <Link
-          href={{ pathname: "/", query: { favourites: true } }}
+          href={{ pathname: "/dashboard", query: { favourites: true } }}
           className={cn(
             "flex items-center gap-x-2 px-2 py-2 rounded-lg text-sm transition-colors",
             favourites

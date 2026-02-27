@@ -3,7 +3,7 @@
 import type { LucideIcon } from "lucide-react";
 
 import { Hint } from "@/components/hint";
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type ToolButtonProps = {
   label: string;
@@ -21,16 +21,20 @@ export const ToolButton = ({
   isDisabled,
 }: ToolButtonProps) => {
   return (
-    <Hint label={label} side="right" sideOffset={14}>
-      <Button
+    <Hint label={label} side="top" sideOffset={12}>
+      <button
         disabled={isDisabled}
         aria-disabled={isDisabled}
         onClick={onClick}
-        size="icon"
-        variant={isActive ? "boardActive" : "board"}
+        className={cn(
+          "flex items-center justify-center size-9 rounded-lg transition-colors",
+          "hover:bg-accent text-muted-foreground hover:text-foreground",
+          "disabled:opacity-40 disabled:pointer-events-none",
+          isActive && "bg-violet-500/15 text-violet-700",
+        )}
       >
-        <Icon />
-      </Button>
+        <Icon className="size-[18px]" />
+      </button>
     </Hint>
   );
 };

@@ -3,12 +3,13 @@
 import { BringToFront, SendToBack, Trash2 } from "lucide-react";
 import { memo } from "react";
 
-import { Button } from "@/components/ui/button";
 import { Hint } from "@/components/hint";
+import { Separator } from "@/components/ui/separator";
 import { useDeleteLayers } from "@/hooks/use-delete-layers";
 import { useSelectionBounds } from "@/hooks/use-selection-bounds";
 import { useMutation, useSelf } from "@liveblocks/react/suspense";
 import type { Camera, Color } from "@/types/canvas";
+import { cn } from "@/lib/utils";
 
 import { ColorPicker } from "./color-picker";
 
@@ -16,6 +17,33 @@ type SelectionToolsProps = {
   camera: Camera;
   setLastUsedColor: (color: Color) => void;
 };
+
+const ActionButton = ({
+  onClick,
+  label,
+  icon: Icon,
+  side = "top",
+  destructive = false,
+}: {
+  onClick: () => void;
+  label: string;
+  icon: React.ElementType;
+  side?: "top" | "bottom";
+  destructive?: boolean;
+}) => (
+  <Hint label={label} side={side} sideOffset={10}>
+    <button
+      onClick={onClick}
+      className={cn(
+        "flex items-center justify-center size-8 rounded-lg transition-colors",
+        "hover:bg-accent text-muted-foreground hover:text-foreground",
+        destructive && "hover:bg-red-50 hover:text-red-600",
+      )}
+    >
+      <Icon className="size-4" />
+    </button>
+  </Hint>
+);
 
 export const SelectionTools = memo(
   ({ camera, setLastUsedColor }: SelectionToolsProps) => {
@@ -83,7 +111,7 @@ export const SelectionTools = memo(
 
     return (
       <div
-        className="absolute p-3 rounded-xl bg-white shadow-sm border flex select-none"
+        className="absolute p-1.5 rounded-xl bg-white shadow-lg border border-neutral-200/60 flex items-center gap-x-1 select-none z-10"
         style={{
           transform: `translate(
             calc(${x}px - 50%),
@@ -93,26 +121,14 @@ export const SelectionTools = memo(
       >
         <ColorPicker onChange={setFill} />
 
-        <div className="flex flex-col gap-y-0.5">
-          <Hint label="Bring to front">
-            <Button onClick={moveToFront} variant="board" size="icon">
-              <BringToFront />
-            </Button>
-          </Hint>
-          <Hint label="Bring to back" side="bottom">
-            <Button onClick={moveToBack} variant="board" size="icon">
-              <SendToBack />
-            </Button>
-          </Hint>
-        </div>
+        <Separator orientation="vertical" className="h-6 mx-0.5" />
 
-        <div className="flex items-center pl-2 ml-2 border-l border-t-neutral-200">
-          <Hint label="Delete">
-            <Button variant="board" size="icon" onClick={deleteLayers}>
-              <Trash2 />
-            </Button>
-          </Hint>
-        </div>
+        <ActionButton onClick={moveToFront} label="Bring to front" icon={BringToFront} />
+        <ActionButton onClick={moveToBack} label="Bring to back" icon={SendToBack} />
+
+        <Separator orientation="vertical" className="h-6 mx-0.5" />
+
+        <ActionButton onClick={deleteLayers} label="Delete" icon={Trash2} destructive />
       </div>
     );
   },

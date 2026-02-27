@@ -74,7 +74,7 @@ export const Navbar = () => {
             {/* Navigation links */}
             <div className="px-2 py-3 space-y-0.5">
               <Link
-                href="/"
+                href="/dashboard"
                 className={cn(
                   "flex items-center gap-x-2 px-3 py-2 rounded-md text-sm text-muted-foreground hover:bg-neutral-100 hover:text-foreground transition-colors",
                   !favourites && "bg-violet-50 text-violet-700 font-medium",
@@ -84,7 +84,7 @@ export const Navbar = () => {
                 Team boards
               </Link>
               <Link
-                href={{ pathname: "/", query: { favourites: true } }}
+                href={{ pathname: "/dashboard", query: { favourites: true } }}
                 className={cn(
                   "flex items-center gap-x-2 px-3 py-2 rounded-md text-sm text-muted-foreground hover:bg-neutral-100 hover:text-foreground transition-colors",
                   favourites && "bg-violet-50 text-violet-700 font-medium",
@@ -137,7 +137,7 @@ export const Navbar = () => {
       </div>
 
       {/* Logo — visible on mobile, hidden on desktop (shown in OrgSidebar) */}
-      <Link href="/" className="lg:hidden flex items-center gap-x-2 shrink-0">
+      <Link href="/dashboard" className="lg:hidden flex items-center gap-x-2 shrink-0">
         <Image src="/logo.svg" alt="SketchLab" height={28} width={28} />
         <span className={cn("font-semibold text-lg hidden sm:inline", font.className)}>
           SketchLab

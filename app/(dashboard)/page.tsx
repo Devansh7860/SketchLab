@@ -19,7 +19,7 @@ export default function Home({searchParams,}: DashboardPageProps) {
   const searchparams = use(searchParams); // Await the searchParams promise
   
   return (
-   <div className="flex-1 h-[calc(100%-80px)] p-4 ">
+   <div className="flex-1 h-[calc(100%-80px)] p-6 ">
     {!organization ? <EmptyOrg /> : (
       <BoardList orgId={organization.id} query={searchparams} />
     )}
