@@ -1,0 +1,28 @@
+"use client";
+
+import { useOrganizationList } from "@clerk/nextjs";
+
+import { Item } from "./item"
+
+export const List = () => {
+  const { userMemberships } = useOrganizationList({ // returns the data of organizations the user is a member of in an array
+    userMemberships: {
+      infinite: true,
+    },
+  });
+
+  if (!userMemberships.data?.length) return null;
+
+  return (
+    <ul className="space-y-4 mb-4">
+      {userMemberships.data?.map((membership) => (
+        <Item
+          key={membership.organization.id}
+          id={membership.organization.id}
+          name={membership.organization.name}
+          imageUrl={membership.organization.imageUrl}
+        />
+      ))}
+    </ul>
+  );
+};
