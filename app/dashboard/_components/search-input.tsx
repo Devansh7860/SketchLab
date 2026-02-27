@@ -1,7 +1,7 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import qs from "query-string";
 import { type ChangeEvent, useEffect, useState } from "react";
 import { useDebounceValue } from "usehooks-ts";
@@ -10,8 +10,12 @@ import { Input } from "@/components/ui/input";
 
 export const SearchInput = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [value, setValue] = useState("");
   const [debouncedValue] = useDebounceValue(value, 500);
+
+  // Read favourites outside the effect so searchParams isn't a dependency
+  const favourites = searchParams.get("favourites");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -23,13 +27,14 @@ export const SearchInput = () => {
         url: "/dashboard",
         query: {
           search: debouncedValue,
+          favourites: favourites || undefined,
         },
       },
       { skipEmptyString: true, skipNull: true },
     );
 
     router.push(url);
-  }, [debouncedValue, router]);
+  }, [debouncedValue, favourites, router]);
 
   return (
     <div className="w-full relative">

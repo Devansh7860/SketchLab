@@ -32,8 +32,8 @@ export const Toolbar = ({
   canUndo,
 }: ToolbarProps) => {
   return (
-    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-x-2 z-10">
-      <div className="bg-white rounded-xl p-1 flex items-center gap-x-0.5 shadow-lg border border-neutral-200/60">
+    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-x-2 z-10 max-w-[calc(100vw-2rem)] overflow-x-auto">
+      <div className="bg-white rounded-xl p-1 flex items-center gap-x-0.5 shadow-lg border border-neutral-200/60 shrink-0">
         <ToolButton
           label="Select"
           icon={MousePointer2}
@@ -123,7 +123,7 @@ export const Toolbar = ({
         />
       </div>
 
-      <div className="bg-white rounded-xl p-1 flex items-center gap-x-0.5 shadow-lg border border-neutral-200/60">
+      <div className="bg-white rounded-xl p-1 flex items-center gap-x-0.5 shadow-lg border border-neutral-200/60 shrink-0">
         <ToolButton
           label="Undo"
           icon={Undo2}
@@ -144,7 +144,7 @@ export const Toolbar = ({
 export const ToolbarSkeleton = () => {
   return (
     <div
-      className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-x-2"
+      className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-x-2 max-w-[calc(100vw-2rem)]"
       aria-hidden
     >
       <div className="bg-white rounded-xl h-11 w-[340px] shadow-lg border border-neutral-200/60" />

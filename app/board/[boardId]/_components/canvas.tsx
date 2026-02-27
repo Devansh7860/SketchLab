@@ -428,6 +428,16 @@ export const Canvas = ({ boardId }: CanvasProps) => {
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
+      // Don't intercept keys when user is editing text content
+      const target = e.target as HTMLElement;
+      if (
+        target.isContentEditable ||
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA"
+      ) {
+        return;
+      }
+
       switch (e.key) {
         case "Backspace":
         case "Delete":
