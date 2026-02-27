@@ -46,16 +46,15 @@ export const remove = mutation({
 
     if (!identity) throw new Error("Unauthorized.");
 
-    const userId = identity.subject;
-
-    const existingFavourite = await ctx.db
+    // Delete ALL favourites for this board (not just current user's)
+    const allFavourites = await ctx.db
       .query("userFavourites")
-      .withIndex("by_user_board", (q) =>
-        q.eq("userId", userId).eq("boardId", args.id),
-      )
-      .unique();
+      .withIndex("by_board", (q) => q.eq("boardId", args.id))
+      .collect();
 
-    if (existingFavourite) await ctx.db.delete(existingFavourite._id);
+    for (const fav of allFavourites) {
+      await ctx.db.delete(fav._id);
+    }
 
     await ctx.db.delete(args.id);
   },
@@ -76,7 +75,7 @@ export const update = mutation({
       throw new Error("Title cannot be longer than 60 characters.");
 
     const board = await ctx.db.patch(args.id, {
-      title: args.title,
+      title,
     });
 
     return board;
@@ -146,7 +145,7 @@ export const unfavourite = mutation({
 export const get = query({
   args: { id: v.id("boards") },
   handler: async (ctx, args) => {
-    const board = ctx.db.get(args.id);
+    const board = await ctx.db.get(args.id);
 
     return board;
   },

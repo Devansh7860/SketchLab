@@ -9,7 +9,7 @@ import { memo } from "react";
 
 const MAX_SHOWN_OTHER_USERS = 2;
 
-export const Participants = memo(() => {
+export const Participants = memo(function Participants() {
   const users = useOthers();
   const currentUser = useSelf();
   const hasMoreUsers = users.length > MAX_SHOWN_OTHER_USERS;

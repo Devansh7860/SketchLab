@@ -2,7 +2,7 @@
 // https://liveblocks.io/docs/api-reference/liveblocks-react#Typing-your-data
 
 import {Layer, Color} from "@/types/canvas";
-import { LiveList, LiveMap, LiveObject } from "@liveblocks/node";
+import { LiveList, LiveMap, LiveObject } from "@liveblocks/client";
 
 declare global {
   interface Liveblocks {

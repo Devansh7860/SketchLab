@@ -74,7 +74,9 @@ export const LayerPreview = memo(
           />
         );
       default:
-        console.warn("Unknown layer type");
+        if (process.env.NODE_ENV === 'development') {
+          console.warn("Unknown layer type", layer);
+        }
         return null;
     }
   },

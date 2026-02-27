@@ -53,20 +53,22 @@ export const get = query({
 
     }
 
+    // Fetch all user's favourites once to avoid N+1 query problem
+    const userFavourites = await ctx.db
+        .query("userFavourites")
+        .withIndex("by_user_org", (q) =>
+            q.eq("userId", identity.subject).eq("orgId", args.orgId)
+        )
+        .collect();
 
+    const favouriteSet = new Set(userFavourites.map(f => f.boardId));
 
-    const boardsWithFavouriteRelation = boards.map((board) => {
-        return ctx.db.query("userFavourites")
-        .withIndex("by_user_board", (q) => 
-            q.eq("userId", identity.subject).eq("boardId", board._id)
-        ).unique()
-        .then((favourite) => ({
-            ...board,
-            isFavourite: !!favourite,
-        })
+    // Map synchronously
+    const boardsWithFavourite = boards.map((board) => ({
+        ...board,
+        isFavourite: favouriteSet.has(board._id),
+    }));
 
-    )})
-    const boardsWithFavouriteBoolean = await Promise.all(boardsWithFavouriteRelation);
-    return boardsWithFavouriteBoolean;
+    return boardsWithFavourite;
     }
 });

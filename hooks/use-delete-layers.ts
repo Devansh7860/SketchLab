@@ -1,10 +1,9 @@
-import { useSelf, useMutation } from "@liveblocks/react/suspense";
+import { useMutation } from "@liveblocks/react/suspense";
 
 export const useDeleteLayers = () => {
-  const selection = useSelf((me) => me.presence.selection);
-
   return useMutation(
-    ({ storage, setMyPresence }) => {
+    ({ storage, setMyPresence, self }) => {
+      const selection = self.presence.selection;
       const liveLayers = storage.get("layers");
       const liveLayerIds = storage.get("layerIds");
 
@@ -20,6 +19,6 @@ export const useDeleteLayers = () => {
 
       setMyPresence({ selection: [] }, { addToHistory: true });
     },
-    [selection],
+    [],
   );
 };

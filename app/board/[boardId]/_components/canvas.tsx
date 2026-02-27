@@ -42,6 +42,7 @@ import { Path } from "./path";
 import { SelectionBox } from "./selection-box";
 import { SelectionTools } from "./selection-tools";
 import { Toolbar } from "./toolbar";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 const MAX_LAYERS = 100;
 const MULTISELECTION_THRESHOLD = 5;
@@ -52,6 +53,7 @@ type CanvasProps = {
 
 export const Canvas = ({ boardId }: CanvasProps) => {
   const layerIds = useStorage((root) => root.layerIds);
+  const layers = useStorage((root) => root.layers);
 
   const pencilDraft = useSelf((me) => me.presence.pencilDraft);
   const [canvasState, setCanvasState] = useState<CanvasState>({
@@ -396,11 +398,41 @@ export const Canvas = ({ boardId }: CanvasProps) => {
     return layerIdsToColorSelection;
   }, [selections]);
 
+  // Viewport culling optimization - only render visible layers
+  const visibleLayerIds = useMemo(() => {
+    if (!layerIds || layerIds.length === 0) return [];
+    if (typeof window === 'undefined') return layerIds;
+
+    const viewport = {
+      x: -camera.x,
+      y: -camera.y,
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
+
+    return layerIds.filter((layerId) => {
+      const layer = layers.get(layerId);
+      if (!layer) return false;
+
+      // AABB intersection check - is layer visible in viewport?
+      return !(
+        layer.x + layer.width < viewport.x ||
+        layer.x > viewport.x + viewport.width ||
+        layer.y + layer.height < viewport.y ||
+        layer.y > viewport.y + viewport.height
+      );
+    });
+  }, [layerIds, layers, camera.x, camera.y]);
+
   const deleteLayers = useDeleteLayers();
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
       switch (e.key) {
+        case "Backspace":
+        case "Delete":
+          deleteLayers();
+          break;
         case "z":
           if (e.ctrlKey || e.metaKey) {
             if (e.shiftKey || e.altKey) history.redo();
@@ -445,13 +477,14 @@ export const Canvas = ({ boardId }: CanvasProps) => {
             transform: `translate(${camera.x}px, ${camera.y}px)`,
           }}
         >
-          {layerIds.map((layerId) => (
-            <LayerPreview
-              key={layerId}
-              id={layerId}
-              onLayerPointerDown={onLayerPointerDown}
-              selectionColor={layerIdsToColorSelection[layerId]}
-            />
+          {visibleLayerIds.map((layerId) => (
+            <ErrorBoundary key={layerId} fallback={null}>
+              <LayerPreview
+                id={layerId}
+                onLayerPointerDown={onLayerPointerDown}
+                selectionColor={layerIdsToColorSelection[layerId]}
+              />
+            </ErrorBoundary>
           ))}
           <SelectionBox onResizeHandlePointerDown={onResizeHandlePointerDown} />
           {canvasState.mode === CanvasMode.SelectionNet &&
